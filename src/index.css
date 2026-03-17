@@ -1,0 +1,1062 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* THFCScan Design System CSS Variables */
+:root {
+  /* Colors */
+  --color-primary-brand: #2E8A6A;
+  --color-primary-action: #FA5D00;
+  --color-accent-harvest-gold: #E6A817;
+  --color-background-off-white: #F8F9FA;
+  --color-surface-white: #FFFFFF;
+  --color-text-primary-charcoal: #212529;
+  --color-text-secondary-medium-gray: #6C757D;
+  --color-border-light-gray: #CED4DA;
+  --color-semantic-success: #198754;
+  --color-semantic-error: #DC3545;
+  --color-semantic-warning: #FFC107;
+  --color-semantic-info: #0D6EFD;
+
+  /* Typography */
+  --font-primary: 'Montserrat', sans-serif;
+  --font-secondary: 'Lato', sans-serif;
+
+  /* Layout Variables for Mobile-First Design */
+  --header-height: 60px;
+  --mobile-header-height: 56px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --sticky-button-height: 80px;
+}
+
+/* Reset and Base Styles - Mobile First */
+* {
+  box-sizing: border-box;
+  /* Prevent horizontal overflow on any element */
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Critical Layout Fix: Allow Scrolling and Remove Viewport Constraints */
+html {
+  margin: 0;
+  padding: 0;
+  /* REMOVED: overflow: hidden - this was preventing scrolling */
+  /* REMOVED: height: 100vh - this was causing mobile browser issues */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Enable smooth scrolling everywhere */
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-secondary);
+  background-color: var(--color-background-off-white);
+  /* REMOVED: overflow: hidden - this was preventing scrolling */
+  /* REMOVED: height: 100vh - this was causing mobile viewport issues */
+  /* REMOVED: max-width: 100vw - unnecessary constraint */
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* App Root Container - Mobile-First Responsive Layout */
+#root {
+  /* REMOVED: height: 100vh - was causing mobile viewport issues */
+  /* REMOVED: overflow: hidden - was preventing scrolling */
+  min-height: 100vh; /* Use min-height instead of fixed height */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+/* Main App Container - Flexible Height */
+.app-container {
+  /* REMOVED: height: 100vh - was causing mobile issues */
+  /* REMOVED: overflow: hidden - was preventing scrolling */
+  min-height: 100vh; /* Use min-height for flexibility */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+/* Layout Container - Responsive and Scrollable */
+.layout-container {
+  /* REMOVED: height: 100vh - was constraining mobile layout */
+  /* REMOVED: overflow: hidden - was preventing scrolling */
+  min-height: 100vh; /* Allow content to expand beyond viewport */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+/* Main Content Area - Properly Scrollable */
+.main-content {
+  flex: 1;
+  width: 100%;
+  /* REMOVED: overflow settings - let content flow naturally */
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  /* Account for fixed header height with extra padding for heading visibility */
+  margin-top: var(--mobile-header-height);
+  padding-top: 0.5rem; /* Extra padding to ensure heading is visible */
+  min-height: calc(100vh - var(--mobile-header-height));
+  position: relative;
+}
+
+/* Content Wrapper - Flexible and Responsive */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  /* REMOVED: min-height: 0 - was causing layout issues */
+}
+
+/* Scrollable Content Container - Mobile Optimized */
+.scrollable-content {
+  flex: 1;
+  width: 100%;
+  /* Enable vertical scrolling, prevent horizontal */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.75rem 1rem 1rem 1rem; /* Reduced top padding to prevent heading cutoff */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  /* Add padding bottom to account for sticky buttons */
+  padding-bottom: calc(var(--sticky-button-height) + var(--safe-area-bottom) + 1rem);
+  position: relative;
+}
+
+/* Form Container - Mobile-First Layout */
+.form-container {
+  width: 100%;
+  /* REMOVED: max-height constraints that were hiding content */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  /* Add bottom padding to prevent content hiding behind sticky elements */
+  padding-bottom: calc(var(--sticky-button-height) + var(--safe-area-bottom) + 2rem);
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* Donation Form Content - Properly Spaced */
+.donation-form-content {
+  width: 100%;
+  /* Ensure content is never hidden behind sticky buttons */
+  padding-bottom: calc(var(--sticky-button-height) + var(--safe-area-bottom) + 2rem);
+  position: relative;
+}
+
+/* Confirmation Container - Mobile Optimized */
+.confirmation-container {
+  width: 100%;
+  /* REMOVED: max-height constraints */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  /* Space for sticky button */
+  padding-bottom: calc(var(--sticky-button-height) + var(--safe-area-bottom) + 2rem);
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* Critical Fix: Enhanced Header Positioning */
+header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200 !important; /* Higher than submit button container */
+  background-color: var(--color-primary-brand) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* Ensure header doesn't scroll away */
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Enhanced Quantity Button Positioning */
+.quantity-button {
+  background-color: var(--color-primary-brand);
+  color: var(--color-surface-white);
+  border: none;
+  border-radius: 12px;
+  width: clamp(44px, 11vw, 52px);
+  height: clamp(44px, 11vw, 52px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: clamp(18px, 4.5vw, 22px);
+  font-weight: 600;
+  will-change: transform;
+  touch-action: manipulation;
+  /* Ensure buttons are always visible */
+  position: relative;
+  z-index: 10;
+  /* Enhanced shadow for better visibility */
+  box-shadow: 0 2px 8px rgba(46, 138, 106, 0.3);
+}
+
+.quantity-button:hover {
+  background-color: #246652;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(46, 138, 106, 0.4);
+}
+
+.quantity-button:active {
+  transform: scale(0.95);
+}
+
+.quantity-button:disabled {
+  background-color: var(--color-border-light-gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced Quantity Input Container */
+.quantity-input-container {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vw, 12px);
+  padding: clamp(8px, 2vw, 12px);
+  background: var(--color-surface-white);
+  border-radius: 16px;
+  border: 2px solid var(--color-border-light-gray);
+  margin: clamp(8px, 2vw, 12px) 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 5;
+}
+
+.quantity-input-container:focus-within {
+  border-color: var(--color-primary-brand);
+  box-shadow: 0 0 0 3px rgba(46, 138, 106, 0.1);
+}
+
+/* Enhanced Submit Button Container - Better Positioning */
+.submit-button-container {
+  /* Make button container stick to bottom of viewport */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150; /* Below header but above content */
+  
+  /* Enhanced styling for better visibility */
+  background: linear-gradient(to bottom, 
+    rgba(248, 249, 250, 0) 0%, 
+    rgba(248, 249, 250, 0.8) 20%, 
+    var(--color-background-off-white) 40%,
+    var(--color-background-off-white) 100%
+  );
+  padding: clamp(12px, 3vw, 16px);
+  padding-bottom: calc(clamp(12px, 3vw, 16px) + var(--safe-area-bottom));
+  border-top: 1px solid var(--color-border-light-gray);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  /* Ensure button is always accessible */
+  min-height: var(--sticky-button-height);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+}
+
+/* Ensure all content has proper spacing for fixed elements */
+.scrollable-content,
+.donation-form-content,
+.confirmation-container,
+.form-container {
+  /* Account for both fixed header and sticky bottom button */
+  padding-top: clamp(8px, 2vw, 12px);
+  padding-bottom: calc(var(--sticky-button-height) + var(--safe-area-bottom) + clamp(16px, 4vw, 24px));
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* Base Typography Classes - Mobile Responsive */
+.text-display {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: clamp(20px, 5vw, 32px);
+  line-height: 1.25;
+  color: var(--color-text-primary-charcoal);
+}
+
+.text-h1 {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: clamp(18px, 4.5vw, 28px);
+  line-height: 1.3;
+  color: var(--color-text-primary-charcoal);
+}
+
+.text-h2 {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: clamp(16px, 4vw, 24px);
+  line-height: 1.3;
+  color: var(--color-text-primary-charcoal);
+}
+
+.text-body-large {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+  font-size: clamp(15px, 3.5vw, 18px);
+  line-height: 1.5;
+  color: var(--color-text-primary-charcoal);
+}
+
+.text-body-default {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+  font-size: clamp(14px, 3vw, 16px);
+  line-height: 1.5;
+  color: var(--color-text-primary-charcoal);
+}
+
+.text-label {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: clamp(12px, 2.5vw, 14px);
+  line-height: 1.4;
+  color: var(--color-text-primary-charcoal);
+}
+
+.text-button {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: clamp(14px, 3vw, 16px);
+  line-height: 1.5;
+}
+
+.text-caption {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+  font-size: clamp(11px, 2vw, 12px);
+  line-height: 1.3;
+  color: var(--color-text-secondary-medium-gray);
+}
+
+.text-small {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+  font-size: clamp(10px, 1.8vw, 11px);
+  line-height: 1.3;
+  color: var(--color-text-secondary-medium-gray);
+}
+
+/* Mobile Touch Targets - Accessibility */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  position: relative;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (pointer: coarse) {
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Responsive Text Utilities */
+.text-responsive-xs {
+  font-size: clamp(10px, 2vw, 12px);
+  line-height: 1.4;
+}
+
+.text-responsive-sm {
+  font-size: clamp(12px, 2.5vw, 14px);
+  line-height: 1.4;
+}
+
+.text-responsive-base {
+  font-size: clamp(14px, 3vw, 16px);
+  line-height: 1.5;
+}
+
+.text-responsive-lg {
+  font-size: clamp(16px, 4vw, 18px);
+  line-height: 1.5;
+}
+
+.text-responsive-xl {
+  font-size: clamp(18px, 4.5vw, 20px);
+  line-height: 1.4;
+}
+
+/* Prevent Horizontal Overflow Utilities */
+.prevent-overflow {
+  max-width: 100%;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Mobile-First Container System */
+.mobile-container {
+  width: 100%;
+  max-width: 100vw;
+  padding-left: clamp(12px, 3vw, 16px);
+  padding-right: clamp(12px, 3vw, 16px);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .mobile-container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-container {
+    max-width: 1024px;
+  }
+}
+
+/* Flexible Layout Utilities */
+.flex-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(8px, 2vw, 16px);
+}
+
+.flex-responsive > * {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Safe Area Utilities */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-area-left {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+
+.safe-area-right {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Enhanced Button Components - Mobile Optimized */
+.btn-primary {
+  background-color: var(--color-primary-action);
+  color: var(--color-surface-white);
+  padding: clamp(12px, 3vw, 16px) clamp(20px, 5vw, 24px);
+  border-radius: 12px;
+  min-height: 48px; /* Ensure proper touch target */
+  min-width: 48px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  will-change: transform;
+  font-size: clamp(14px, 3vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  /* Prevent button content from overflowing */
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Enhanced text handling */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Better mobile interaction */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #e54d00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(250, 93, 0, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-border-light-gray);
+  color: var(--color-text-secondary-medium-gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary-brand);
+  padding: clamp(10px, 2.5vw, 14px) clamp(18px, 4.5vw, 22px);
+  border-radius: 12px;
+  min-height: 44px;
+  min-width: 44px;
+  border: 2px solid var(--color-primary-brand);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  will-change: transform;
+  font-size: clamp(14px, 3vw, 16px);
+  font-weight: 600;
+  /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Enhanced text handling */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Better mobile interaction */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary-brand);
+  color: var(--color-surface-white);
+  transform: translateY(-1px);
+}
+
+/* Enhanced Input Fields - Mobile Optimized */
+.input-field {
+  border: 2px solid var(--color-border-light-gray);
+  border-radius: 12px;
+  padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 20px);
+  font-size: 16px; /* Prevent zoom on iOS */
+  background-color: var(--color-surface-white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  position: relative;
+  outline: none;
+  min-height: 48px; /* Proper touch target */
+  /* Prevent horizontal overflow */
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border: 2px solid var(--color-primary-brand);
+  box-shadow: 0 0 0 3px rgba(46, 138, 106, 0.1);
+}
+
+.input-field.error {
+  border-color: var(--color-semantic-error);
+}
+
+.input-field.success {
+  border-color: var(--color-semantic-success);
+}
+
+.input-field::placeholder {
+  color: #9CA3AF;
+  opacity: 1;
+}
+
+/* Photo Preview - Mobile Optimized */
+.photo-preview {
+  border: 2px solid var(--color-border-light-gray);
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-background-off-white);
+  height: clamp(120px, 25vw, 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Modal System - Mobile-First */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: clamp(12px, 3vw, 20px);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background-color: var(--color-surface-white);
+  border-radius: 16px;
+  padding: clamp(20px, 5vw, 24px);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  /* Prevent horizontal overflow */
+  max-width: calc(100vw - 2rem);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Toast Notifications - Mobile Optimized */
+.toast {
+  position: fixed;
+  top: clamp(16px, 4vw, 20px);
+  right: clamp(16px, 4vw, 20px);
+  padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 20px);
+  border-radius: 12px;
+  color: var(--color-surface-white);
+  z-index: 1001;
+  animation: slideIn 0.3s ease;
+  max-width: clamp(280px, 80vw, 400px);
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.toast.success {
+  background-color: var(--color-semantic-success);
+}
+
+.toast.error {
+  background-color: var(--color-semantic-error);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Loading Overlay - Enhanced */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1002;
+  color: var(--color-surface-white);
+  backdrop-filter: blur(4px);
+}
+
+.spinner {
+  width: clamp(32px, 8vw, 40px);
+  height: clamp(32px, 8vw, 40px);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid var(--color-surface-white);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Digital Signature Seal - Enhanced */
+.digital-signature-seal {
+  width: clamp(60px, 15vw, 80px);
+  height: clamp(60px, 15vw, 80px);
+  background-color: var(--color-semantic-success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  animation: sealAnimation 1s ease-in-out;
+  box-shadow: 0 8px 24px rgba(25, 135, 84, 0.3);
+}
+
+@keyframes sealAnimation {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+/* Responsive Spacing System */
+.space-y-1 > * + * { margin-top: clamp(4px, 1vw, 6px); }
+.space-y-2 > * + * { margin-top: clamp(6px, 1.5vw, 10px); }
+.space-y-3 > * + * { margin-top: clamp(10px, 2.5vw, 16px); }
+.space-y-4 > * + * { margin-top: clamp(14px, 3.5vw, 20px); }
+.space-y-6 > * + * { margin-top: clamp(20px, 5vw, 32px); }
+
+.gap-2 { gap: clamp(6px, 1.5vw, 10px); }
+.gap-3 { gap: clamp(10px, 2.5vw, 16px); }
+.gap-4 { gap: clamp(14px, 3.5vw, 20px); }
+
+.p-2 { padding: clamp(6px, 1.5vw, 10px); }
+.p-3 { padding: clamp(10px, 2.5vw, 16px); }
+.p-4 { padding: clamp(14px, 3.5vw, 20px); }
+.p-6 { padding: clamp(20px, 5vw, 32px); }
+
+.mb-1 { margin-bottom: clamp(4px, 1vw, 6px); }
+.mb-2 { margin-bottom: clamp(6px, 1.5vw, 10px); }
+.mb-3 { margin-bottom: clamp(10px, 2.5vw, 16px); }
+.mb-4 { margin-bottom: clamp(14px, 3.5vw, 20px); }
+.mb-6 { margin-bottom: clamp(20px, 5vw, 32px); }
+
+/* Enhanced Scrollbar Styling */
+.scrollable-content::-webkit-scrollbar,
+.confirmation-container::-webkit-scrollbar,
+.form-container::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb,
+.confirmation-container::-webkit-scrollbar-thumb,
+.form-container::-webkit-scrollbar-thumb,
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover,
+.confirmation-container::-webkit-scrollbar-thumb:hover,
+.form-container::-webkit-scrollbar-thumb:hover,
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Firefox scrollbar styling */
+.scrollable-content,
+.confirmation-container,
+.form-container,
+.modal-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Enhanced Mobile-Specific Optimizations */
+@media (max-width: 768px) {
+  :root {
+    --mobile-header-height: 60px;
+    --sticky-button-height: 88px;
+  }
+
+  /* Enhanced header for mobile */
+  header {
+    padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px) !important;
+    min-height: var(--mobile-header-height);
+  }
+
+  /* Better quantity button spacing on mobile */
+  .quantity-button {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    border-radius: 14px;
+  }
+
+  .quantity-input-container {
+    padding: 12px;
+    gap: 12px;
+    margin: 12px 0;
+    border-radius: 14px;
+  }
+
+  /* Enhanced mobile button styling */
+  .btn-primary,
+  .btn-secondary {
+    min-height: 52px;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Better mobile input styling */
+  .input-field {
+    font-size: 16px;
+    min-height: 52px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    border-width: 2px;
+  }
+
+  /* Mobile-optimized photo preview */
+  .photo-preview {
+    min-height: 160px;
+    border-radius: 16px;
+    border-width: 2px;
+  }
+
+  /* Enhanced mobile navigation icons */
+  nav a {
+    padding: 10px !important;
+    border-radius: 10px !important;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* Small Phone Optimizations */
+@media (max-width: 480px) {
+  :root {
+    --mobile-header-height: 56px;
+    --sticky-button-height: 92px;
+  }
+
+  .quantity-button {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .quantity-input-container {
+    padding: 10px;
+    gap: 10px;
+    margin: 10px 0;
+  }
+}
+
+/* Landscape Mobile Optimizations */
+@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --mobile-header-height: 48px;
+    --sticky-button-height: 80px;
+  }
+
+  header {
+    padding: 6px 12px !important;
+  }
+
+  .quantity-input-container {
+    margin: 6px 0;
+    padding: 8px;
+  }
+
+  .submit-button-container {
+    padding: 8px;
+    padding-bottom: calc(8px + var(--safe-area-bottom));
+  }
+}
+
+/* Prevent any layout shifts during scrolling */
+.layout-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  /* Ensure smooth scrolling */
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus states for accessibility */
+.quantity-button:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 3px solid var(--color-primary-brand);
+  outline-offset: 2px;
+}
+
+/* Prevent horizontal scrolling on all elements */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 100%;
+}
+
+/* Additional overflow prevention */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive visibility utilities */
+.hidden-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hidden-mobile {
+    display: block;
+  }
+  
+  .hidden-desktop {
+    display: none;
+  }
+}
+
+/* Enhanced focus management */
+.focus-visible:focus-visible {
+  outline: 3px solid var(--color-primary-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth transitions for better UX */
+.transition-smooth {
+  transition: all 0.2s ease;
+}
+
+.transition-transform {
+  transition: transform 0.2s ease;
+}
+
+.transition-colors {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Ensure sticky elements work properly across all mobile browsers */
+@supports (position: sticky) {
+  .submit-button-container {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+/* Fallback for older browsers */
+@supports not (position: sticky) {
+  .submit-button-container {
+    position: fixed;
+  }
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-scroll {
+  will-change: scroll-position;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Print styles */
+@media print {
+  .submit-button-container,
+  .quantity-button,
+  .btn-primary,
+  .btn-secondary {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .scrollable-content,
+  .form-container,
+  .confirmation-container {
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-primary,
+  .btn-secondary,
+  .quantity-button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

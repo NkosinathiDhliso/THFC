@@ -1,0 +1,38 @@
+# AWS Amplify Environment Configuration
+# This file defines environment variables and settings for different environments
+
+# Production Environment
+production:
+  environmentVariables:
+    VITE_APP_ENV: "production"
+    VITE_APP_URL: "https://main.d1hgu8owfsmbo5.amplifyapp.com"
+    VITE_DEV_SERVER_URL: "https://main.d1hgu8owfsmbo5.amplifyapp.com"
+    # Only public keys - service keys stored in AWS Secrets Manager
+    VITE_SUPABASE_URL: "https://tqrlhajnkfcchgzsqpjd.supabase.co"
+    VITE_SUPABASE_ANON_KEY: "your-anon-key-here"
+    # VITE_SUPABASE_SERVICE_KEY: "REMOVED - Use AWS Secrets Manager"
+    # VITE_AWS_API_KEY: "REMOVED - Use AWS Secrets Manager"
+
+# Preview Environment (for pull requests)
+preview:
+  environmentVariables:
+    VITE_APP_ENV: "preview"
+    VITE_APP_URL: "https://preview.d1hgu8owfsmbo5.amplifyapp.com"
+    VITE_DEV_SERVER_URL: "https://preview.d1hgu8owfsmbo5.amplifyapp.com"
+    # Only public keys - service keys stored in AWS Secrets Manager
+    VITE_SUPABASE_URL: "https://tqrlhajnkfcchgzsqpjd.supabase.co"
+    VITE_SUPABASE_ANON_KEY: "your-anon-key-here"
+    # VITE_SUPABASE_SERVICE_KEY: "REMOVED - Use AWS Secrets Manager"
+    # VITE_AWS_API_KEY: "REMOVED - Use AWS Secrets Manager"
+
+# Development Environment
+development:
+  environmentVariables:
+    VITE_APP_ENV: "development"
+    VITE_APP_URL: "http://localhost:5173"
+    VITE_DEV_SERVER_URL: "http://localhost:5173"
+    # Only public keys - service keys stored in AWS Secrets Manager
+    VITE_SUPABASE_URL: "https://tqrlhajnkfcchgzsqpjd.supabase.co"
+    VITE_SUPABASE_ANON_KEY: "your-anon-key-here"
+    # VITE_SUPABASE_SERVICE_KEY: "REMOVED - Use AWS Secrets Manager"
+    # VITE_AWS_API_KEY: "REMOVED - Use AWS Secrets Manager"
